@@ -8,7 +8,7 @@ list_o_stats = {
         "crit": 0,
         "mp": 0,
     },
-    "Enemy": {
+    "ENEMY": {
         "hp": 0,
         "damage": 0,
         "defense": 0,

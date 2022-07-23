@@ -7,11 +7,11 @@ def char_create():
     print("Welcome to the game, please enter your name:")
     chars.list_o_chars["HERO"]["name"] = input()
     print("here are your base stats:", chars.list_o_chars["HERO"])
-    print("You have 10 points to upgrade your stats")
+    print("You have 8 points to upgrade your stats")
     print("You can upgrade your HP, MP, ATK, DEF, SPD")
     print("all points upgrade the stat by 1, except HP and MP")
     print("HP increases by 2 per 1 stat spend and MP increases by .5 per 1 stat spend")
-    points = 10
+    points = 8
     while points > 0:
         print("You have", points, "points left")
         print("What stat would you like to upgrade?")
@@ -37,20 +37,22 @@ def char_create():
             print("Invalid stat")
     print("Here are your current stats: ", chars.list_o_chars["HERO"])
 
-enemy = stats.list_o_stats["Enemy"]
-current_foe = bad.list_o_enemies["Orc"]
+enemy = stats.list_o_stats["ENEMY"]
+current_foe = bad.list_o_enemies["ORC"]
+hero = stats.list_o_stats["HERO"]
+current_ally = chars.list_o_chars["HERO"]
 
 def hero_prep():
-    stats.list_o_stats["HERO"]["hp"] = chars.list_o_chars["HERO"]["hp"]
-    stats.list_o_stats["HERO"]["mp"] = chars.list_o_chars["HERO"]["mp"]
-    stats.list_o_stats["HERO"]["damage"] = chars.list_o_chars["HERO"]["atk"] * 2
-    stats.list_o_stats["HERO"]["damage"] = round(stats.list_o_stats["HERO"]["damage"])
-    stats.list_o_stats["HERO"]["defense"] = chars.list_o_chars["HERO"]["def"] * 0.75
-    stats.list_o_stats["HERO"]["defense"] += chars.list_o_chars["HERO"]["def"] / 2
-    stats.list_o_stats["HERO"]["defense"] = math.floor(stats.list_o_stats["HERO"]["defense"])
-    stats.list_o_stats["HERO"]["go"] = chars.list_o_chars["HERO"]["spd"]
-    stats.list_o_stats["HERO"]["dodge"] = chars.list_o_chars["HERO"]["spd"] / 100
-    stats.list_o_stats["HERO"]["crit"] = chars.list_o_chars["HERO"]["spd"] / 100
+    hero["hp"] = current_ally["hp"]
+    hero["mp"] = current_ally["mp"]
+    hero["damage"] = current_ally["atk"] * 2
+    hero["damage"] = round(hero["damage"])
+    hero["defense"] = current_ally["def"] * 0.75
+    hero["defense"] += current_ally["def"] / 2
+    hero["defense"] = math.floor(hero["defense"])
+    hero["go"] = current_ally["spd"]
+    hero["dodge"] = current_ally["spd"] / 100
+    hero["crit"] = current_ally["spd"] / 100
 
 def enemy_prep():
     enemy["hp"] = current_foe["hp"]
@@ -76,15 +78,15 @@ def combat():
     global fighting
     fighting = True
     global hero_attack_damage
-    hero_attack_damage = stats.list_o_stats["HERO"]["damage"] - enemy["defense"]
+    hero_attack_damage = hero["damage"] - enemy["defense"]
     global enemy_attack_damage
-    enemy_attack_damage = enemy["damage"] - stats.list_o_stats["HERO"]["defense"]
+    enemy_attack_damage = enemy["damage"] - hero["defense"]
     while fighting:
         if enemy_attack_damage < 0:
             enemy_attack_damage = 1
         if hero_attack_damage < 0:
             hero_attack_damage = 1
-        if stats.list_o_stats["HERO"]["hp"] <= 0:
+        if hero["hp"] <= 0:
             print("You have died")
             fighting = False
             break
@@ -94,7 +96,7 @@ def combat():
             fighting = False
             break
         else:
-            if stats.list_o_stats["HERO"]["go"] >= enemy["go"]:
+            if hero["go"] >= enemy["go"]:
                 print("You attack first")
                 enemy["hp"] -= hero_attack_damage
                 print("You did", hero_attack_damage, "damage")
@@ -105,19 +107,19 @@ def combat():
                     break
                 else:
                     print("The enemy attacks")
-                    stats.list_o_stats["HERO"]["hp"] -= enemy_attack_damage
+                    hero["hp"] -= enemy_attack_damage
                     print("The enemy did", enemy_attack_damage, "damage")
-                    print("You have", stats.list_o_stats["HERO"]["hp"], "HP left")
-                    if stats.list_o_stats["HERO"]["hp"] <= 0:
+                    print("You have", hero["hp"], "HP left")
+                    if hero["hp"] <= 0:
                         print("You have died")
                         fighting = False
                         break
             else:
                 print("The enemy attacks first")
-                stats.list_o_stats["HERO"]["hp"] -= enemy_attack_damage
+                hero["hp"] -= enemy_attack_damage
                 print("The enemy did", enemy_attack_damage, "damage")
-                print("You have", stats.list_o_stats["HERO"]["hp"], "HP left")
-                if stats.list_o_stats["HERO"]["hp"] <= 0:
+                print("You have", hero["hp"], "HP left")
+                if hero["hp"] <= 0:
                     print("You have died")
                     fighting = False
                     break
@@ -135,16 +137,16 @@ def combat():
 
 combat()
 print("\n")
-current_foe = bad.list_o_enemies["Goblin"]
+current_foe = bad.list_o_enemies["GOBLIN"]
 enemy_prep()
 combat()
 
 print("\n")
-current_foe = bad.list_o_enemies["Troll"]
+current_foe = bad.list_o_enemies["TROLL"]
 enemy_prep()
 combat()
 
 print("\n")
-current_foe = bad.list_o_enemies["Skeleton"]
+current_foe = bad.list_o_enemies["SKELETON"]
 enemy_prep()
 combat()

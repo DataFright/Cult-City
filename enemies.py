@@ -1,5 +1,5 @@
 list_o_enemies = {
-    "Goblin": {
+    "GOBLIN": {
         "name": "Goblin",
         "hp": 5,
         "mp": 0,
@@ -7,7 +7,7 @@ list_o_enemies = {
         "def": 1,
         "spd": 5,
     },
-    "Orc": {
+    "ORC": {
         "name": "Orc",
         "hp": 8,
         "mp": 0,
@@ -15,7 +15,7 @@ list_o_enemies = {
         "def": 2,
         "spd": 1,
     },
-    "Troll": {
+    "TROLL": {
         "name": "Troll",
         "hp": 12,
         "mp": 0,
@@ -23,7 +23,7 @@ list_o_enemies = {
         "def": 3,
         "spd": 1,
     },
-    "Skeleton": {
+    "SKELETON": {
         "name": "Skeleton",
         "hp": 20,
         "mp": 0,
