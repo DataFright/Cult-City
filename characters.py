@@ -5,6 +5,6 @@ list_o_chars = {
         "mp": 2,
         "atk": 6,
         "def": 6,
-        "spd": 3,
+        "spd": 13,
     },
 }

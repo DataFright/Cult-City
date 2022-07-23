@@ -1,5 +1,5 @@
 list_o_stats = {
-    "HERO": {
+    "ALLY": {
         "hp": 0,
         "damage": 0,
         "defense": 0,

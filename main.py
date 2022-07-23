@@ -2,6 +2,7 @@ import characters as chars
 import enemies as bad
 import stats
 import math
+import random
 
 def char_create():
     print("Welcome to the game, please enter your name:")
@@ -39,7 +40,7 @@ def char_create():
 
 enemy = stats.list_o_stats["ENEMY"]
 current_foe = bad.list_o_enemies["ORC"]
-hero = stats.list_o_stats["HERO"]
+hero = stats.list_o_stats["ALLY"]
 current_ally = chars.list_o_chars["HERO"]
 
 def hero_prep():
@@ -63,8 +64,8 @@ def enemy_prep():
     enemy["defense"] += current_foe["def"] / 2
     enemy["defense"] = math.floor(enemy["defense"])
     enemy["go"] = current_foe["spd"]
-    enemy["dodge"] = current_foe["spd"] / 100
-    enemy["crit"] = current_foe["spd"] / 100
+    enemy["dodge"] = current_foe["spd"] * 2 / 100
+    enemy["crit"] = current_foe["spd"] *2 / 100
 
 
 
@@ -86,6 +87,13 @@ def combat():
             enemy_attack_damage = 1
         if hero_attack_damage < 0:
             hero_attack_damage = 1
+        hero["mp"] += 1
+        enemy["mp"] += 1
+        if hero["mp"] > current_ally["mp"]:
+            hero["mp"] = current_ally["mp"]
+        if enemy["mp"] > current_foe["mp"]:
+            enemy["mp"] = current_foe["mp"]
+        print(f"You currently have {hero['hp']} HP and {hero['mp']} MP")
         if hero["hp"] <= 0:
             print("You have died")
             fighting = False
@@ -97,34 +105,17 @@ def combat():
             break
         else:
             if hero["go"] >= enemy["go"]:
-                print("You attack first")
-                enemy["hp"] -= hero_attack_damage
-                print("You did", hero_attack_damage, "damage")
-                if enemy["hp"] <= 0:
-                    print("The enemy has", enemy["hp"], "HP left")
-                    print(f"You have defeated the {current_foe['name']}")
-                    fighting = False
-                    break
-                else:
-                    print("The enemy attacks")
-                    hero["hp"] -= enemy_attack_damage
-                    print("The enemy did", enemy_attack_damage, "damage")
-                    print("You have", hero["hp"], "HP left")
-                    if hero["hp"] <= 0:
-                        print("You have died")
+                print(f"You, {current_ally['name']}, attack first")
+                if hero["crit"] > random.random():
+                    print("You have a critical hit")
+                    enemy["hp"] -= hero_attack_damage * 2
+                    print("You did", hero_attack_damage * 2, "damage")
+                    if enemy["hp"] <= 0:
+                        print("The enemy has", enemy["hp"], "HP left")
+                        print(f"You have defeated the {current_foe['name']}")
                         fighting = False
                         break
-            else:
-                print("The enemy attacks first")
-                hero["hp"] -= enemy_attack_damage
-                print("The enemy did", enemy_attack_damage, "damage")
-                print("You have", hero["hp"], "HP left")
-                if hero["hp"] <= 0:
-                    print("You have died")
-                    fighting = False
-                    break
                 else:
-                    print("You attack")
                     enemy["hp"] -= hero_attack_damage
                     print("You did", hero_attack_damage, "damage")
                     if enemy["hp"] <= 0:
@@ -132,6 +123,50 @@ def combat():
                         print(f"You have defeated the {current_foe['name']}")
                         fighting = False
                         break
+                    else:
+                        print(f"The {current_foe['name']} attacks")
+                        if hero["dodge"] > random.random():
+                            print("You dodged the attack")
+                        else:
+                            hero["hp"] -= enemy_attack_damage
+                            print("The enemy did", enemy_attack_damage, "damage")
+                            print("You have", hero["hp"], "HP left")
+                            if hero["hp"] <= 0:
+                                print("You have died")
+                                fighting = False
+                                break
+            else:
+                print(f"The {current_foe['name']} attacks first")
+                print(f"The {current_foe['name']} attacks")
+                if hero["dodge"] > random.random():
+                    print("You dodged the attack")
+                else:
+                    hero["hp"] -= enemy_attack_damage
+                    print("The enemy did", enemy_attack_damage, "damage")
+                    print("You have", hero["hp"], "HP left")
+                    if hero["hp"] <= 0:
+                        print("You have died")
+                        fighting = False
+                        break
+                    else:
+                        print(f"You, {current_ally['name']}, attack ")
+                        if hero["crit"] > random.random():
+                            print("You have a critical hit")
+                            enemy["hp"] -= hero_attack_damage * 2
+                            print("You did", hero_attack_damage * 2, "damage")
+                            if enemy["hp"] <= 0:
+                                print("The enemy has", enemy["hp"], "HP left")
+                                print(f"You have defeated the {current_foe['name']}")
+                                fighting = False
+                                break
+                        else:
+                            enemy["hp"] -= hero_attack_damage
+                            print("You did", hero_attack_damage, "damage")
+                            if enemy["hp"] <= 0:
+                                print("The enemy has", enemy["hp"], "HP left")
+                                print(f"You have defeated the {current_foe['name']}")
+                                fighting = False
+                                break
 
 
 
