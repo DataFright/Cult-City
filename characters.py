@@ -1,10 +1,10 @@
 list_o_chars = {
     "HERO": {
         "name": "Hero",
-        "hp": 14,
+        "hp": 6,
         "mp": 2,
-        "atk": 6,
-        "def": 6,
-        "spd": 13,
+        "atk": 3,
+        "def": 3,
+        "spd": 3,
     },
 }

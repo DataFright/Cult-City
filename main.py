@@ -4,6 +4,7 @@ import stats
 import math
 import random
 
+
 def char_create():
     print("Welcome to the game, please enter your name:")
     chars.list_o_chars["HERO"]["name"] = input()
@@ -38,10 +39,12 @@ def char_create():
             print("Invalid stat")
     print("Here are your current stats: ", chars.list_o_chars["HERO"])
 
+
 enemy = stats.list_o_stats["ENEMY"]
 current_foe = bad.list_o_enemies["ORC"]
 hero = stats.list_o_stats["ALLY"]
 current_ally = chars.list_o_chars["HERO"]
+
 
 def hero_prep():
     hero["hp"] = current_ally["hp"]
@@ -55,6 +58,7 @@ def hero_prep():
     hero["dodge"] = current_ally["spd"] / 100
     hero["crit"] = current_ally["spd"] / 100
 
+
 def enemy_prep():
     enemy["hp"] = current_foe["hp"]
     enemy["mp"] = current_foe["mp"]
@@ -65,14 +69,7 @@ def enemy_prep():
     enemy["defense"] = math.floor(enemy["defense"])
     enemy["go"] = current_foe["spd"]
     enemy["dodge"] = current_foe["spd"] * 2 / 100
-    enemy["crit"] = current_foe["spd"] *2 / 100
-
-
-
-# char_create()
-hero_prep()
-enemy_prep()
-print("\n")
+    enemy["crit"] = current_foe["spd"] * 2 / 100
 
 
 def combat():
@@ -169,6 +166,10 @@ def combat():
                                 break
 
 
+# char_create()
+hero_prep()
+enemy_prep()
+print("\n")
 
 combat()
 print("\n")
@@ -185,3 +186,6 @@ print("\n")
 current_foe = bad.list_o_enemies["SKELETON"]
 enemy_prep()
 combat()
+
+
+# test
